@@ -1,10 +1,10 @@
 Vagrant.configure("2") do |config|
     config.vm.box = "centos/7"
-    config.vm.define "abenaniS" do |server|
-        server.vm.hostname = "abenaniS"
+    config.vm.define "user" do |server|
+        server.vm.hostname = "user"
         server.vm.network "private_network", ip: "192.168.42.110"
         server.vm.provider "virtualbox" do |v|
-            v.name = "abenaniS"
+            v.name = "user"
             v.memory = 1024
             v.cpus = 1
         end
@@ -13,14 +13,14 @@ Vagrant.configure("2") do |config|
         echo $(sudo cat /var/lib/rancher/k3s/server/node-token) > /vagrant/.token
         SHELL
         server.trigger.after :up do |trigger|
-            trigger.run = {inline: "vagrant scp abenaniS:/vagrant/.token ."}
+            trigger.run = {inline: "vagrant scp user:/vagrant/.token ."}
         end
     end
-    config.vm.define "abenaniSW" do |worker|
-        worker.vm.hostname = "abenaniSW"
+    config.vm.define "userW" do |worker|
+        worker.vm.hostname = "userW"
         worker.vm.network "private_network", ip: "192.168.42.111"
         worker.vm.provider "virtualbox" do |v|
-            v.name = "abenaniSW"
+            v.name = "userW"
             v.memory = 1024
             v.cpus = 1
         end
